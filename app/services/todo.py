@@ -92,7 +92,7 @@ async def change_todo(db_session, todo_id: int, request: TodoRequest, owner_id: 
             description = :description,
             priority = :priority,
             complete = :complete
-        WHERE todo_id = :todo_id AND owner_id = :owner
+        WHERE todo_id = :todo_id AND owner_id = :owner_id
         RETURNING todo_id, title, description, priority, complete
     """).bindparams(
             bindparam("todo_id", type_=Integer),
