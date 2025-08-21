@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from app.services.security import get_current_user
+from app.services.user import fetch_user
 from app.dependencies import get_db_session
-from app.schemas import LoginResponse
+from app.schemas.LoginSchema import LoginResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -26,7 +27,7 @@ async def get_user(
     if not current_user:
         raise HTTPException(status_code=401, detail="User is not authenticated.")
     try:
-        user = await get_user(db_session, current_user["user_id"])
+        user = await fetch_user(db_session, current_user["user_id"])
         if not user:
             raise HTTPException(status_code=401, detail="User is not authenticated")
         return user
